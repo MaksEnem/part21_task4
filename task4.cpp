@@ -10,6 +10,21 @@ struct Person {
 
 };
 
+void initializing_heroy(Person& heroy) {
+
+	std::cout << "Enter your character's name: ";
+	std::cin >> heroy.name;
+
+	std::cout << "Enter the number of health points for your character: ";
+	std::cin >> heroy.health_points;
+
+	std::cout << "Enter the number of armor for your character: ";
+	std::cin >> heroy.armor;
+
+	std::cout << "Enter the number of damage for your character: ";
+	std::cin >> heroy.damage;
+}
+
 void initializing_fieid(bool is_field[][20]) {
 
 	for (int i = 0; i < 20; ++i) {
@@ -19,31 +34,27 @@ void initializing_fieid(bool is_field[][20]) {
 		}
 	}
 }
+
 int main() {
 
 	std::srand(std::time(nullptr));
 
 	Person opponents[5];	
+	Person heroy;
 
 	for (int i = 0; i < 5; ++i) {
 
 		opponents[i].name = "Opponent#" + std::to_string(i + 1);
 		opponents[i].health_points = std::rand() % 101 + 50;
 		opponents[i].armor = std::rand() % 51;
-		opponents[i].damage = std::rand() % 15 + 15;
-	}
-
-
-	for (int i = 0; i < 5; ++i) {
-
-		std::cout << "name " << opponents[i].name << " " << "health_points " << opponents[i].health_points << " " << "armor " << opponents[i].armor << " " << opponents[i].damage << std::endl;
-
+		opponents[i].damage = std::rand() % 16 + 15;
 	}
 
 
 
+	initializing_heroy(heroy);
 
-
+	
 
 
 	bool is_field[20][20];
