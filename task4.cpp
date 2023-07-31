@@ -163,13 +163,29 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 
 					}
-					else {
+					else {				
 
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
+						opponents[i].coordinate_x += 1;						
 
-						opponents[i].coordinate_x += 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
 
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+																
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else {
+
+								opponents[i].coordinate_x -= 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+							}
+						}
+						else {
+
+							std::cout << "≈башь!!!!!";
+
+						}
 					}
 				}
 				else if (step == 1) {
@@ -185,8 +201,25 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_x -= 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else {
+
+								opponents[i].coordinate_x += 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+							}
+						}
+						else {
+
+							std::cout << "≈башь!!!!!";
+
+						}
 					}
 				}
 				else if (step == 2) {
@@ -201,8 +234,25 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_y += 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else {
+
+								opponents[i].coordinate_y -= 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+							}
+						}
+						else {
+
+							std::cout << "≈башь!!!!!";
+
+						}
 					}
 				}
 				else if (step == 3) {
@@ -217,11 +267,27 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_y -= 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else {
+
+								opponents[i].coordinate_y += 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+							}
+						}
+						else {
+
+							std::cout << "≈башь!!!!!";
+
+						}
 					}
 				}
-
 			}
 			else if (i == 5) {
 
