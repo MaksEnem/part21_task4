@@ -168,22 +168,22 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 						opponents[i].coordinate_x += 1;						
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'P') {
 
-							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'E') {
 																
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 
 							}
-							else {
+							else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
 
 								opponents[i].coordinate_x -= 1;
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 							}
 						}
-						else {
+						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "≈башь!!!!!";
+							std::cout << "fight!!!!!";
 
 						}
 					}
@@ -202,22 +202,21 @@ int main() {
 
 						opponents[i].coordinate_x -= 1;
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'P') {
 
-							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'E') {
 
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
-
 							}
-							else {
+							else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
 
 								opponents[i].coordinate_x += 1;
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 							}
 						}
-						else {
+						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "≈башь!!!!!";
+							std::cout << "fight!!!!!";
 
 						}
 					}
@@ -235,22 +234,21 @@ int main() {
 
 						opponents[i].coordinate_y += 1;
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'P') {
 
-							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'E') {
 
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
-
 							}
-							else {
+							else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
 
 								opponents[i].coordinate_y -= 1;
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 							}
 						}
-						else {
+						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "≈башь!!!!!";
+							std::cout << "fight!!!!!";
 
 						}
 					}
@@ -268,29 +266,29 @@ int main() {
 
 						opponents[i].coordinate_y -= 1;
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[5].coordinate_x][opponents[5].coordinate_y]) {
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'P') {
 
-							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != field[opponents[i + 1].coordinate_x][opponents[i + 1].coordinate_y]) {
+							if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] != 'E') {
 
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
-
 							}
-							else {
+							else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
 
 								opponents[i].coordinate_y += 1;
 								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
 							}
 						}
-						else {
+						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "≈башь!!!!!";
+							std::cout << "fight!!!!!";
 
 						}
 					}
 				}
 			}
 			else if (i == 5) {
-
+				
+				playing_field(field);
 				do {
 
 					std::cout << "Make a move with the keys: l, r, u, d: ";
@@ -311,8 +309,17 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_y -= 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
 
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+
+							std::cout << "fight!";
+
+						}
+						else {
+							
+							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+
+						}
 					}
 				}
 				else if (step_heroy == 'r') {
@@ -327,10 +334,18 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_y += 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
 
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+
+							std::cout << "fight!";
+
+						}
+						else {
+
+							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+
+						}
 					}
-
 				}
 				else if (step_heroy == 'u') {
 
@@ -341,10 +356,20 @@ int main() {
 					}
 					else {
 
-						field[opponents[i].coordinate_x][opponents[5].coordinate_y] = '.';
+						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_x -= 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+
+							std::cout << "fight!";
+
+						}
+						else {
+
+							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+
+						}
 
 					}
 				}
@@ -360,7 +385,16 @@ int main() {
 						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
 
 						opponents[i].coordinate_x += 1;
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+
+							std::cout << "fight!";
+
+						}
+						else {
+
+							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+
+						}
 
 					}
 				}
@@ -369,9 +403,6 @@ int main() {
 				playing_field(field);
 
 			}
-
 		}
-
 	}
-
 }
