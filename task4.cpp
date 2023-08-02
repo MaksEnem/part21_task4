@@ -10,6 +10,7 @@ struct Person {
 	int damage;
 	int coordinate_x;
 	int coordinate_y;
+	bool is_life;
 };
 
 void initializing_opponents(Person& opponents, int &i) {	
@@ -18,7 +19,7 @@ void initializing_opponents(Person& opponents, int &i) {
 		opponents.health_points = std::rand() % 101 + 50;
 		opponents.armor = std::rand() % 51;
 		opponents.damage = std::rand() % 16 + 15;	
-
+		opponents.is_life = true;
 }
 
 void initializing_hero(Person& hero) {
@@ -97,12 +98,35 @@ void playing_field(char field[][20]) {
 	}
 }
 
-void take_damage(Person& opponents, Person& hero) {
+void take_damage_opponents(Person& opponents, Person& hero) {
 	
-	std::cout << opponents.name << " caused damage: " << opponents.damage;
+	std::cout << hero.name << " took damage: " << opponents.damage;
 
-	
+	hero.armor -= opponents.damage;
 
+	if (hero.armor < 0) {
+
+		hero.health_points += hero.armor;
+		hero.armor = 0;
+
+	}
+
+	std::cout << "hero healt points = " << hero.health_points << std::endl;
+
+}
+
+void hero_damage_opponents(Person& opponents, Person& hero) {
+
+	std::cout << opponents.name << " took damage: " << hero.damage;
+
+	opponents.armor -= hero.damage;
+
+	if (opponents.armor < 0) {
+
+		opponents.health_points += opponents.armor;
+		opponents.armor = 0;
+
+	}
 }
 
 int main() {
@@ -110,13 +134,14 @@ int main() {
 	std::srand(std::time(nullptr));
 
 
-	Person opponents[5];	
+	Person opponents[5];
 	Person hero;
+	int number_of_opponents = 0;
 
-
-	for (int i = 0; i < 5; ++i) {			
+	for (int i = 0; i < 5; ++i) {
 
 		initializing_opponents(opponents[i], i);
+		++number_of_opponents;
 	}
 
 
@@ -148,18 +173,21 @@ int main() {
 
 
 
+
+
+	
+
 	bool is_result = true;
 
 	while (is_result) {
 
 		int step;
 		char step_hero;
-
+		
 
 		for (int i = 0; i < 6; ++i) {
 
-			if (i < 5) {
-
+			if (i < 5 && opponents[i].is_life == true) {
 
 				step = std::rand() % 4;
 
@@ -190,7 +218,20 @@ int main() {
 						}
 						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "fight!!!!!";
+							take_damage_opponents(opponents[i], hero);
+
+							if (hero.health_points > 0) {
+
+								opponents[i].coordinate_x -= 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else if (hero.health_points <= 0) {
+
+								std::cout << "You lose" << std::endl;
+								is_result = false;
+								break;
+							}
 
 						}
 					}
@@ -223,8 +264,20 @@ int main() {
 						}
 						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "fight!!!!!";
+							take_damage_opponents(opponents[i], hero);
 
+							if (hero.health_points > 0) {
+
+								opponents[i].coordinate_x += 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else if (hero.health_points <= 0) {
+
+								std::cout << "You lose" << std::endl;
+								is_result = false;
+								break;
+							}
 						}
 					}
 				}
@@ -255,8 +308,20 @@ int main() {
 						}
 						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "fight!!!!!";
+							take_damage_opponents(opponents[i], hero);
 
+							if (hero.health_points > 0) {
+
+								opponents[i].coordinate_y -= 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else if (hero.health_points <= 0) {
+
+								std::cout << "You lose" << std::endl;
+								is_result = false;
+								break;
+							}
 						}
 					}
 				}
@@ -287,8 +352,20 @@ int main() {
 						}
 						else if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'P') {
 
-							std::cout << "fight!!!!!";
+							take_damage_opponents(opponents[i], hero);
 
+							if (hero.health_points > 0) {
+
+								opponents[i].coordinate_y += 1;
+								field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'E';
+
+							}
+							else if (hero.health_points <= 0) {
+
+								std::cout << "You lose" << std::endl;
+								is_result = false;
+								break;
+							}
 						}
 					}
 				}
@@ -319,7 +396,35 @@ int main() {
 
 						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
-							std::cout << "fight!";
+							for (int i = 0; i < 5; ++i) {
+
+								if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == field[hero.coordinate_x][hero.coordinate_y]) {
+
+									hero_damage_opponents(opponents[i], hero);
+
+									if (opponents[i].health_points > 0) {
+
+										hero.coordinate_y += 1;
+										field[hero.coordinate_x][hero.coordinate_y] = 'P';
+
+									}
+									else if (opponents[i].health_points <= 0) {
+
+										field[opponents[i].coordinate_x][opponents[i].coordinate_y] == '.';
+										opponents[i].is_life = false;
+										--number_of_opponents;
+
+										if (number_of_opponents == 0) {
+
+											std::cout << "You victory" << std::endl;
+											is_result = false;
+										}
+										
+									}
+
+									break;
+								}
+							}
 
 						}
 						else {
@@ -344,8 +449,34 @@ int main() {
 
 						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
-							std::cout << "fight!";
+							for (int i = 0; i < 5; ++i) {
 
+								if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == field[hero.coordinate_x][hero.coordinate_y]) {
+
+									hero_damage_opponents(opponents[i], hero);
+
+									if (opponents[i].health_points > 0) {
+
+										hero.coordinate_y -= 1;
+										field[hero.coordinate_x][hero.coordinate_y] = 'P';
+
+									}
+									else if (opponents[i].health_points <= 0) {
+
+										field[opponents[i].coordinate_x][opponents[i].coordinate_y] == '.';
+										opponents[i].is_life = false;
+										--number_of_opponents;
+
+										if (number_of_opponents == 0) {
+
+											std::cout << "You victory" << std::endl;
+											is_result = false;
+										}
+									}
+
+									break;
+								}
+							}
 						}
 						else {
 
@@ -369,7 +500,34 @@ int main() {
 
 						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
-							std::cout << "fight!";
+							for (int i = 0; i < 5; ++i) {
+
+								if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == field[hero.coordinate_x][hero.coordinate_y]) {
+
+									hero_damage_opponents(opponents[i], hero);
+
+									if (opponents[i].health_points > 0) {
+
+										hero.coordinate_x += 1;
+										field[hero.coordinate_x][hero.coordinate_y] = 'P';
+
+									}
+									else if (opponents[i].health_points <= 0) {
+
+										field[opponents[i].coordinate_x][opponents[i].coordinate_y] == '.';
+										opponents[i].is_life = false;
+										--number_of_opponents;
+
+										if (number_of_opponents == 0) {
+
+											std::cout << "You victory" << std::endl;
+											is_result = false;
+										}
+									}
+
+									break;
+								}
+							}
 
 						}
 						else {
@@ -393,14 +551,41 @@ int main() {
 						hero.coordinate_x += 1;
 						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
-							std::cout << "fight!";
+							for (int i = 0; i < 5; ++i) {
 
+								if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == field[hero.coordinate_x][hero.coordinate_y]){
+
+									hero_damage_opponents(opponents[i], hero);
+
+									if (opponents[i].health_points > 0) {
+
+										hero.coordinate_x -= 1;
+										field[hero.coordinate_x][hero.coordinate_y] = 'P';
+
+									}
+									else if (opponents[i].health_points <= 0) {
+
+										field[opponents[i].coordinate_x][opponents[i].coordinate_y] == '.';
+										opponents[i].is_life = false;
+										--number_of_opponents;
+
+										if (number_of_opponents == 0) {
+
+											std::cout << "You victory" << std::endl;
+											is_result = false;
+										}
+									}
+
+									break;
+								}
+							}
 						}
 						else {
 
 							field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 						}
+
 					}
 				}
 				std::cout << std::endl;
