@@ -21,19 +21,19 @@ void initializing_opponents(Person& opponents, int &i) {
 
 }
 
-void initializing_heroy(Person& opponents) {
+void initializing_hero(Person& hero) {
 	
 	std::cout << "Enter your character's name: ";
-	std::cin >> opponents.name;
+	std::cin >> hero.name;
 
 	std::cout << "Enter the number of health points for your character: ";
-	std::cin >> opponents.health_points;
+	std::cin >> hero.health_points;
 
 	std::cout << "Enter the number of armor for your character: ";
-	std::cin >> opponents.armor;
+	std::cin >> hero.armor;
 
 	std::cout << "Enter the number of damage for your character: ";
-	std::cin >> opponents.damage;
+	std::cin >> hero.damage;
 }
 
 void initializing_fieid(char field[][20]) {
@@ -59,16 +59,16 @@ void initializing_game_fieid_opponents(Person& opponents, char field[][20]) {
 
 }
 
-void initializing_game_fieid_heroy(Person& opponents, char field[][20]) {
+void initializing_game_fieid_hero(Person& hero, char field[][20]) {
 
 	do {
 
-		opponents.coordinate_x = 10;
-		opponents.coordinate_y = 10;
+		hero.coordinate_x = 10;
+		hero.coordinate_y = 10;
 
-	} while (field[opponents.coordinate_x][opponents.coordinate_y] != '.');
+	} while (field[hero.coordinate_x][hero.coordinate_y] != '.');
 
-	field[opponents.coordinate_x][opponents.coordinate_y] = 'P';
+	field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 }
 
@@ -92,10 +92,16 @@ void playing_field(char field[][20]) {
 				std::cout << "P" << " ";
 
 			}
-
 		}
 		std::cout << std::endl;
 	}
+}
+
+void take_damage(Person& opponents, Person& hero) {
+	
+	std::cout << opponents.name << " caused damage: " << opponents.damage;
+
+	
 
 }
 
@@ -104,7 +110,8 @@ int main() {
 	std::srand(std::time(nullptr));
 
 
-	Person opponents[6];	
+	Person opponents[5];	
+	Person hero;
 
 
 	for (int i = 0; i < 5; ++i) {			
@@ -113,7 +120,7 @@ int main() {
 	}
 
 
-	initializing_heroy(opponents[5]);
+	initializing_hero(hero);
 
 
 	 char field[20][20];
@@ -128,7 +135,7 @@ int main() {
 	}	
 
 	
-	initializing_game_fieid_heroy(opponents[5], field);
+	initializing_game_fieid_hero(hero, field);
 
 	playing_field(field);
 
@@ -146,7 +153,7 @@ int main() {
 	while (is_result) {
 
 		int step;
-		char step_heroy;
+		char step_hero;
 
 
 		for (int i = 0; i < 6; ++i) {
@@ -292,110 +299,108 @@ int main() {
 				do {
 
 					std::cout << "Make a move with the keys: l, r, u, d: ";
-					std::cin >> step_heroy;
+					std::cin >> step_hero;
 
-				} while (step_heroy != 'l' && step_heroy != 'r' && step_heroy != 'u' && step_heroy != 'd');
+				} while (step_hero != 'l' && step_hero != 'r' && step_hero != 'u' && step_hero != 'd');
 
 
-				if (step_heroy == 'l') {
+				if (step_hero == 'l') {
 
-					if (opponents[i].coordinate_y == 0) {
+					if (hero.coordinate_y == 0) {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+						field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 					}
 					else {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
+						field[hero.coordinate_x][hero.coordinate_y] = '.';
 
-						opponents[i].coordinate_y -= 1;
+						hero.coordinate_y -= 1;
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
 							std::cout << "fight!";
 
 						}
 						else {
 							
-							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+							field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 						}
 					}
 				}
-				else if (step_heroy == 'r') {
+				else if (step_hero == 'r') {
 
-					if (opponents[i].coordinate_y == 19) {
+					if (hero.coordinate_y == 19) {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+						field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 					}
 					else {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
+						field[hero.coordinate_x][hero.coordinate_y] = '.';
 
-						opponents[i].coordinate_y += 1;
+						hero.coordinate_y += 1;
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
 							std::cout << "fight!";
 
 						}
 						else {
 
-							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+							field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 						}
 					}
 				}
-				else if (step_heroy == 'u') {
+				else if (step_hero == 'u') {
 
-					if (opponents[i].coordinate_x == 0) {
+					if (hero.coordinate_x == 0) {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+						field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 					}
 					else {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
+						field[hero.coordinate_x][hero.coordinate_y] = '.';
 
-						opponents[i].coordinate_x -= 1;
+						hero.coordinate_x -= 1;
 
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
 							std::cout << "fight!";
 
 						}
 						else {
 
-							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+							field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 						}
-
 					}
 				}
-				else if (step_heroy == 'd') {
+				else if (step_hero == 'd') {
 
-					if (opponents[i].coordinate_x == 19) {
+					if (hero.coordinate_x == 19) {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+						field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 					}
 					else {
 
-						field[opponents[i].coordinate_x][opponents[i].coordinate_y] = '.';
+						field[hero.coordinate_x][hero.coordinate_y] = '.';
 
-						opponents[i].coordinate_x += 1;
-						if (field[opponents[i].coordinate_x][opponents[i].coordinate_y] == 'E') {
+						hero.coordinate_x += 1;
+						if (field[hero.coordinate_x][hero.coordinate_y] == 'E') {
 
 							std::cout << "fight!";
 
 						}
 						else {
 
-							field[opponents[i].coordinate_x][opponents[i].coordinate_y] = 'P';
+							field[hero.coordinate_x][hero.coordinate_y] = 'P';
 
 						}
-
 					}
 				}
 				std::cout << std::endl;
